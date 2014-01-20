@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_subreport3" language="groovy" pageWidth="555" pageHeight="802" columnWidth="555" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idCliente" class="java.lang.Long"/>
+	<parameter name="dataInicioDate" class="java.sql.Timestamp"/>
+	<parameter name="dataTerminoDate" class="java.sql.Timestamp"/>
+	<parameter name="tdPedidos" class="java.lang.Boolean"/>
+	<queryString>
+		<![CDATA[select pro_descricao,
+sum(ite_ped_ptotal) from item_pedido, pedido, produto
+where ped_id = ite_ped_pedido_id_fk
+and ped_cli_id = $P{idCliente}
+and ped_data between $P{dataInicioDate} and
+$P{dataTerminoDate}
+and ite_ped_produto_id_fk = pro_id
+group by pro_descricao]]>
+	</queryString>
+	<field name="pro_descricao" class="java.lang.String"/>
+	<field name="sum" class="java.lang.Double"/>
+	<group name="pro_descricao">
+		<groupExpression><![CDATA[$F{pro_descricao}]]></groupExpression>
+	</group>
+	<detail>
+		<band height="24" splitType="Stretch">
+			<textField>
+				<reportElement x="200" y="2" width="150" height="20"/>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.String"><![CDATA[$F{pro_descricao}]]></textFieldExpression>
+			</textField>
+			<textField pattern="¤ #,##0.00">
+				<reportElement x="433" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression class="java.lang.Double"><![CDATA[$F{sum}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

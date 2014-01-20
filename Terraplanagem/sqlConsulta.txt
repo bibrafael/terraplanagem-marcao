@@ -1,0 +1,5 @@
+﻿select ped_id, ped_data, ped_valor_total, ite_ped_quantidade, ite_ped_ptotal, ite_ped_densidade, ite_ped_pesocaminhao  from pedido, item_pedido, produto 
+
+where ped_cli_id = 12 and ped_id = ite_ped_pedido_id_fk and ite_ped_produto_id_fk = pro_id and ped_data between '2010-04-01' and '2010-04-30';
+
+select * from pedido where ped_cli_id = 12 and ped_data between '2010-04-05' and '2010-04-07';
