@@ -92,34 +92,24 @@ public class FrameLogin extends JFrame {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 
-	public String criptografarSenha (String senha) throws NoSuchAlgorithmException {  
-		MessageDigest md = MessageDigest.getInstance("MD5");  
-		BigInteger hash = new BigInteger(1, md.digest(senha.getBytes()));  
-		String s = hash.toString(16);  
-		if (s.length() %2 != 0)  
-			s = "0" + s;  
-		return s;  
-	} 
-
 	private class LoginListener implements ActionListener {
 
 		private FrameLogin frLogin = null;
-		
+
 		public LoginListener(FrameLogin frameLogin) {
 			frLogin = frameLogin;
 		}
 
-		@SuppressWarnings("deprecation")
 		public void actionPerformed(ActionEvent e) {
 			String nome = tfNome.getText().toString();
 			String senha = tfSenha.getText().toString();
 			if (nome.isEmpty() && senha.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Digite o usuário e a senha!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-			}else if(nome.isEmpty()) {
+			} else if (nome.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Digite o usuário!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-			}else if (senha.isEmpty()) {
+			} else if (senha.isEmpty()) {
 				JOptionPane.showMessageDialog(null, "Digite a senha do usuário!", "Atenção", JOptionPane.INFORMATION_MESSAGE);
-			}else if ((!nome.isEmpty()) && (!senha.isEmpty())) {
+			} else if ((!nome.isEmpty()) && (!senha.isEmpty())) {
 				try {
 					senha = criptografarSenha(senha);
 				} catch (HeadlessException e1) {
@@ -130,9 +120,9 @@ public class FrameLogin extends JFrame {
 
 				boolean flag = AcoesUsuario.getInstance().verificarLogin(nome, senha);
 
-				if(flag == false) {
+				if (flag == false) {
 					JOptionPane.showConfirmDialog(null, "Usuário ou senha incorretos!", "Alerta", JOptionPane.CLOSED_OPTION, JOptionPane.WARNING_MESSAGE);
-				}else {
+				} else {
 					JFrame frame = new FramePrincipal();
 					frame.setSize(600, 400);
 					frame.show();
@@ -140,6 +130,15 @@ public class FrameLogin extends JFrame {
 				}
 			}
 		}
+	}
+
+	protected String criptografarSenha(String senha) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		BigInteger hash = new BigInteger(1, md.digest(senha.getBytes()));
+		String s = hash.toString(16);
+		if (s.length() % 2 != 0)
+			s = "0" + s;
+		return s;
 	}
 
 	private class CancelarListener implements ActionListener {
