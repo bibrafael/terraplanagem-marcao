@@ -44,147 +44,149 @@ public class UsuarioDialog extends JDialog {
 	private JTextField tfNome;
 	private JPasswordField tfSenha;
 
-	private JPanel panelButtons; 	
+	private JPanel panelButtons;
 	private JButton btLer;
 	private JButton btCriar;
 	private JButton btAlterar;
 	private JButton btDeletar;
 	private JButton btLimpar;
 
-	private JScrollPane scrollPanel;	
+	private JScrollPane scrollPanel;
 	private JTable table;
 	private DefaultTableModel tableModel;
 
 	public UsuarioDialog() {
-		this.setTitle("Terraplanagem São Marcos - Cadastro de Usuários");
+		this.setTitle( "Terraplanagem São Marcos - Cadastro de Usuários" );
 
 		GridBagConstraints cons = new GridBagConstraints();
-		cons.insets = new Insets(5, 5, 5, 5);
+		cons.insets = new Insets( 5, 5, 5, 5 );
 
 		panelToolBar = new JPanel();
-		panelToolBar.setLayout(new BorderLayout());
+		panelToolBar.setLayout( new BorderLayout() );
 
 		panelItens = new JPanel();
-		panelItens.setLayout(new GridBagLayout());		
+		panelItens.setLayout( new GridBagLayout() );
 
-		lbNome = new JLabel("Usuário:");
+		lbNome = new JLabel( "Usuário:" );
 		cons.gridy = 0;
 		cons.gridx = 0;
 		cons.anchor = GridBagConstraints.LINE_START;
-		panelItens.add(lbNome, cons);
+		panelItens.add( lbNome, cons );
 
-		tfNome = new JTextField(20);
+		tfNome = new JTextField( 20 );
 		cons.gridy = 0;
 		cons.gridx = 1;
 		cons.gridwidth = 2;
-		panelItens.add(tfNome, cons);
+		panelItens.add( tfNome, cons );
 
-		lbSenha = new JLabel("Senha:");
+		lbSenha = new JLabel( "Senha:" );
 		cons.gridy = 1;
 		cons.gridx = 0;
-		panelItens.add(lbSenha, cons);
+		panelItens.add( lbSenha, cons );
 
-		tfSenha = new JPasswordField(20);
+		tfSenha = new JPasswordField( 20 );
 		cons.gridy = 1;
 		cons.gridx = 1;
 		cons.gridwidth = 2;
-		panelItens.add(tfSenha, cons);
+		panelItens.add( tfSenha, cons );
 
-		btCriar = new JButton("Inserir");
+		btCriar = new JButton( "Inserir" );
 		cons.gridy = 2;
 		cons.gridx = 1;
 		cons.gridwidth = 1;
-		btCriar.addActionListener(new criarUsuarioListener());
-		panelItens.add(btCriar, cons);
+		btCriar.addActionListener( new criarUsuarioListener() );
+		panelItens.add( btCriar, cons );
 
-		btLimpar = new JButton("Limpar");
+		btLimpar = new JButton( "Limpar" );
 		cons.gridy = 2;
 		cons.gridx = 2;
 		cons.gridwidth = 1;
-		btLimpar.addActionListener(new limparUsuarioListener());
-		panelItens.add(btLimpar, cons);
+		btLimpar.addActionListener( new limparUsuarioListener() );
+		panelItens.add( btLimpar, cons );
 
-		panelToolBar.add(panelItens, BorderLayout.PAGE_START);
+		panelToolBar.add( panelItens, BorderLayout.PAGE_START );
 
-		panelButtons = new JPanel(new FlowLayout());
+		panelButtons = new JPanel( new FlowLayout() );
 
-		btLer = new JButton("Pesquisar");
-		btLer.addActionListener(new lerUsuarioListener());
-		panelButtons.add(btLer);
+		btLer = new JButton( "Pesquisar" );
+		btLer.addActionListener( new lerUsuarioListener() );
+		panelButtons.add( btLer );
 
-		btAlterar = new JButton("Alterar");
-		btAlterar.addActionListener(new alterarUsuarioListener());
-		panelButtons.add(btAlterar);
+		btAlterar = new JButton( "Alterar" );
+		btAlterar.addActionListener( new alterarUsuarioListener() );
+		panelButtons.add( btAlterar );
 
-		btDeletar = new JButton("Deletar");
-		btDeletar.addActionListener(new deletarUsuarioListener());
-		panelButtons.add(btDeletar);
+		btDeletar = new JButton( "Deletar" );
+		btDeletar.addActionListener( new deletarUsuarioListener() );
+		panelButtons.add( btDeletar );
 
-		tableModel = AcoesUsuario.getInstance().ler("");
-		table = new JTable(tableModel){
+		tableModel = AcoesUsuario.getInstance().ler( "" );
+		table = new JTable( tableModel ) {
 			private static final long serialVersionUID = 1L;
 
-			public boolean isCellEditable(int row, int col) {
+			public boolean isCellEditable( int row, int col ) {
 				return false;
 			}
 		};
-		table.addMouseListener(new selecionarLinhaTabela());
-		table.getColumnModel().removeColumn( table.getColumnModel().getColumn(0));
+		table.addMouseListener( new selecionarLinhaTabela() );
+		table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 		setarTamanhoColunas();
-		scrollPanel = new JScrollPane(table);	
+		scrollPanel = new JScrollPane( table );
 
-		this.setLayout(new BorderLayout());
-		this.add(panelToolBar, BorderLayout.PAGE_START);
-		this.add(scrollPanel, BorderLayout.CENTER);
-		this.add(panelButtons, BorderLayout.PAGE_END);
-		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setLayout( new BorderLayout() );
+		this.add( panelToolBar, BorderLayout.PAGE_START );
+		this.add( scrollPanel, BorderLayout.CENTER );
+		this.add( panelButtons, BorderLayout.PAGE_END );
+		this.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
 	}
 
-	class CenterRenderer extends DefaultTableCellRenderer {  
+	class CenterRenderer extends DefaultTableCellRenderer {
 		private static final long serialVersionUID = 4433840270638649209L;
 
-		public CenterRenderer() {  
-			setHorizontalAlignment(CENTER);  
-		}  
-	}  
-	public void setarTamanhoColunas() {
-		TableCellRenderer centerRenderer = new CenterRenderer();  
-		TableColumn column = table.getColumnModel().getColumn(0);  
-		column.setCellRenderer(centerRenderer); 
+		public CenterRenderer() {
+			setHorizontalAlignment( CENTER );
+		}
 	}
-	
-	public String criptografarSenha (String senha) throws NoSuchAlgorithmException {  
-		MessageDigest md = MessageDigest.getInstance("MD5");  
-		BigInteger hash = new BigInteger(1, md.digest(senha.getBytes()));  
-		String s = hash.toString(16);  
-		if (s.length() %2 != 0)  
-			s = "0" + s;  
-		return s;  
-	} 
+
+	public void setarTamanhoColunas() {
+		TableCellRenderer centerRenderer = new CenterRenderer();
+		TableColumn column = table.getColumnModel().getColumn( 0 );
+		column.setCellRenderer( centerRenderer );
+	}
+
+	public String criptografarSenha( String senha ) throws NoSuchAlgorithmException {
+		MessageDigest md = MessageDigest.getInstance( "MD5" );
+		BigInteger hash = new BigInteger( 1, md.digest( senha.getBytes() ) );
+		String s = hash.toString( 16 );
+		if ( s.length() % 2 != 0 )
+			s = "0" + s;
+		return s;
+	}
 
 	private class criarUsuarioListener implements ActionListener {
 
-		@SuppressWarnings("deprecation")
+		@SuppressWarnings( "deprecation" )
 		@Override
-		public void actionPerformed(ActionEvent e) {
+		public void actionPerformed( ActionEvent e ) {
 			String nome = tfNome.getText();
 			String senha = tfSenha.getText();
 
-			if(nome.isEmpty() || senha.isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "Alerta", JOptionPane.WARNING_MESSAGE);
-			}else {
+			if ( nome.isEmpty() || senha.isEmpty() ) {
+				JOptionPane.showMessageDialog( null, "Todos os campos devem ser preenchidos!", "Alerta", JOptionPane.WARNING_MESSAGE );
+			} else {
 				try {
-					senha = criptografarSenha(senha);
-					table.setModel(AcoesUsuario.getInstance().criar(nome, senha));
-					table.getColumnModel().removeColumn( table.getColumnModel().getColumn(0));
+					senha = criptografarSenha( senha );
+					table.setModel( AcoesUsuario.getInstance().criar( nome, senha ) );
+					table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 					setarTamanhoColunas();
-					tfNome.setText(null);
-					tfSenha.setText(null);
+					tfNome.setText( null );
+					tfSenha.setText( null );
 					id = null;
-				} catch (SQLException e1) {
-					JOptionPane.showMessageDialog(null, "Usuário já existente!", "Erro", JOptionPane.ERROR_MESSAGE);
-				} catch (NoSuchAlgorithmException e2) {}
+				} catch ( SQLException e1 ) {
+					JOptionPane.showMessageDialog( null, "Usuário já existente!", "Erro", JOptionPane.ERROR_MESSAGE );
+				} catch ( NoSuchAlgorithmException e2 ) {
+				}
 			}
 		}
 	}
@@ -192,14 +194,14 @@ public class UsuarioDialog extends JDialog {
 	private class lerUsuarioListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(tfNome.getText().equals(null)) {
-				JOptionPane.showMessageDialog(null, "Usuário não pode ser nulo!");
-			}else {
-				table.setModel(AcoesUsuario.getInstance().ler(tfNome.getText()));
-				table.getColumnModel().removeColumn( table.getColumnModel().getColumn(0));
+		public void actionPerformed( ActionEvent e ) {
+			if ( tfNome.getText().equals( null ) ) {
+				JOptionPane.showMessageDialog( null, "Usuário não pode ser nulo!" );
+			} else {
+				table.setModel( AcoesUsuario.getInstance().ler( tfNome.getText() ) );
+				table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 				setarTamanhoColunas();
-				tfSenha.setText(null);
+				tfSenha.setText( null );
 				id = null;
 			}
 		}
@@ -208,15 +210,15 @@ public class UsuarioDialog extends JDialog {
 	private class alterarUsuarioListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(id == null || tfNome.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Selecione um usuário para alterar.", "Alerta", JOptionPane.WARNING_MESSAGE);
-			}else {
-				JDialog dialog = new AlterarSenhaDialog(id, tfNome.getText());
+		public void actionPerformed( ActionEvent e ) {
+			if ( id == null || tfNome.getText().isEmpty() ) {
+				JOptionPane.showMessageDialog( null, "Selecione um usuário para alterar.", "Alerta", JOptionPane.WARNING_MESSAGE );
+			} else {
+				JDialog dialog = new AlterarSenhaDialog( id, tfNome.getText() );
 				dialog.pack();
-				dialog.setVisible(true);
+				dialog.setVisible( true );
 				id = null;
-				tfNome.setText(null);
+				tfNome.setText( null );
 			}
 		}
 
@@ -225,29 +227,22 @@ public class UsuarioDialog extends JDialog {
 	private class deletarUsuarioListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(id == null) {
-				JOptionPane.showMessageDialog(null, "Selecione um usuário para deletar!", "Erro", JOptionPane.ERROR_MESSAGE);
-			}else {
-				Object[] options = { "Sim", "Não" };   
-				int sd =   
-					JOptionPane.showOptionDialog(   
-							null,   
-							"Deseja deletar usuário?",   
-							"Alerta",   
-							JOptionPane.DEFAULT_OPTION,   
-							JOptionPane.WARNING_MESSAGE,   
-							null,   
-							options,   
-							options[0]);  
-				if (sd == 0) {   
-					table.setModel(AcoesUsuario.getInstance().deletar(id));
-					table.getColumnModel().removeColumn(table.getColumnModel().getColumn(0));
+		public void actionPerformed( ActionEvent e ) {
+			if ( id == null ) {
+				JOptionPane.showMessageDialog( null, "Selecione um usuário para deletar!", "Erro", JOptionPane.ERROR_MESSAGE );
+			} else {
+				Object[] options = { "Sim", "Não" };
+				int sd = JOptionPane.showOptionDialog( null, "Deseja deletar usuário?", "Alerta", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
+						null, options, options[0] );
+				if ( sd == 0 ) {
+					table.setModel( AcoesUsuario.getInstance().deletar( id ) );
+					table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 					setarTamanhoColunas();
-					tfNome.setText(null);
-					tfSenha.setText(null);
+					tfNome.setText( null );
+					tfSenha.setText( null );
 					id = null;
-				} else {}   
+				} else {
+				}
 			}
 		}
 	}
@@ -255,9 +250,9 @@ public class UsuarioDialog extends JDialog {
 	private class limparUsuarioListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			tfNome.setText(null);
-			tfSenha.setText(null);
+		public void actionPerformed( ActionEvent e ) {
+			tfNome.setText( null );
+			tfSenha.setText( null );
 			id = null;
 		}
 
@@ -266,19 +261,27 @@ public class UsuarioDialog extends JDialog {
 	private class selecionarLinhaTabela implements MouseListener {
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
+		public void mouseClicked( MouseEvent e ) {
 			int linha = table.getSelectedRow();
-			id = new Long(((String)table.getModel().getValueAt(linha, 0)));	
-			tfNome.setText((String)table.getModel().getValueAt(linha, 1));
+			id = new Long( ((String) table.getModel().getValueAt( linha, 0 )) );
+			tfNome.setText( (String) table.getModel().getValueAt( linha, 1 ) );
 		}
+
 		@Override
-		public void mouseEntered(MouseEvent e) {}
+		public void mouseEntered( MouseEvent e ) {
+		}
+
 		@Override
-		public void mouseExited(MouseEvent e) {}
+		public void mouseExited( MouseEvent e ) {
+		}
+
 		@Override
-		public void mousePressed(MouseEvent e) {}
+		public void mousePressed( MouseEvent e ) {
+		}
+
 		@Override
-		public void mouseReleased(MouseEvent e) {}
+		public void mouseReleased( MouseEvent e ) {
+		}
 	}
 
 }
