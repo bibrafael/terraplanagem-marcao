@@ -29,6 +29,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import com.ezware.oxbow.swingbits.table.filter.TableRowFilterSupport;
+
 import control.AcoesUsuario;
 
 public class UsuarioDialog extends JDialog {
@@ -128,6 +130,7 @@ public class UsuarioDialog extends JDialog {
 				return false;
 			}
 		};
+		TableRowFilterSupport.forTable( table ).searchable( true ).apply();
 		table.addMouseListener( new selecionarLinhaTabela() );
 		table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 		setarTamanhoColunas();

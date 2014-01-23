@@ -63,11 +63,11 @@ public class Login extends JFrame {
 	 */
 	public Login() throws UnsupportedLookAndFeelException {
 		super( "Terraplanagem São Marcos" );
-		setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
-		setBounds( 100, 100, 350, 180 );
-		setLocationRelativeTo( null );
-		setContentPane( getContentPane() );
-		setResizable( false );
+		this.setDefaultCloseOperation( JFrame.EXIT_ON_CLOSE );
+		this.setBounds( 100, 100, 350, 180 );
+		this.setLocationRelativeTo( null );
+		this.setContentPane( getContentPane() );
+		this.setResizable( false );
 
 		UIManager.setLookAndFeel( new MetalLookAndFeel() );
 
