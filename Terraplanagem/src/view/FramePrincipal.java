@@ -124,13 +124,12 @@ public class FramePrincipal extends JFrame {
 
 	private class ClienteListener implements ActionListener {
 
-		@SuppressWarnings( "deprecation" )
 		@Override
 		public void actionPerformed( ActionEvent e ) {
 			JDialog dialog = new ClienteDialog();
 			dialog.setModal( true );
 			dialog.setSize( 800, 500 );
-			dialog.show( true );
+			dialog.setVisible( true );
 		}
 	}
 
@@ -148,14 +147,12 @@ public class FramePrincipal extends JFrame {
 
 	private class UsuarioListener implements ActionListener {
 
-		@SuppressWarnings( "deprecation" )
 		@Override
 		public void actionPerformed( ActionEvent e ) {
-			JDialog dialog = new UsuarioDialog();
-			dialog.setModal( true );
-			dialog.setSize( 800, 500 );
-			dialog.setLocationRelativeTo( null );
-			dialog.show( true );
+			DialogUsuario dlgUsuario = new DialogUsuario();
+			dlgUsuario.setModal( true );
+			dlgUsuario.setLocationRelativeTo( null );
+			dlgUsuario.setVisible( true );
 		}
 
 	}

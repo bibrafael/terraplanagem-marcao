@@ -29,6 +29,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import com.ezware.dialog.task.CommandLink;
+import com.ezware.dialog.task.TaskDialogs;
 import com.ezware.oxbow.swingbits.table.filter.TableRowFilterSupport;
 
 import control.AcoesUsuario;
@@ -47,11 +49,9 @@ public class UsuarioDialog extends JDialog {
 	private JPasswordField tfSenha;
 
 	private JPanel panelButtons;
-	private JButton btLer;
 	private JButton btCriar;
 	private JButton btAlterar;
 	private JButton btDeletar;
-	private JButton btLimpar;
 
 	private JScrollPane scrollPanel;
 	private JTable table;
@@ -99,20 +99,9 @@ public class UsuarioDialog extends JDialog {
 		btCriar.addActionListener( new criarUsuarioListener() );
 		panelItens.add( btCriar, cons );
 
-		btLimpar = new JButton( "Limpar" );
-		cons.gridy = 2;
-		cons.gridx = 2;
-		cons.gridwidth = 1;
-		btLimpar.addActionListener( new limparUsuarioListener() );
-		panelItens.add( btLimpar, cons );
-
 		panelToolBar.add( panelItens, BorderLayout.PAGE_START );
 
 		panelButtons = new JPanel( new FlowLayout() );
-
-		btLer = new JButton( "Pesquisar" );
-		btLer.addActionListener( new lerUsuarioListener() );
-		panelButtons.add( btLer );
 
 		btAlterar = new JButton( "Alterar" );
 		btAlterar.addActionListener( new alterarUsuarioListener() );
@@ -127,7 +116,9 @@ public class UsuarioDialog extends JDialog {
 			private static final long serialVersionUID = 1L;
 
 			public boolean isCellEditable( int row, int col ) {
-				return false;
+				if ( col != 1 )
+					return false;
+				return true;
 			}
 		};
 		TableRowFilterSupport.forTable( table ).searchable( true ).apply();
@@ -194,21 +185,22 @@ public class UsuarioDialog extends JDialog {
 		}
 	}
 
-	private class lerUsuarioListener implements ActionListener {
-
-		@Override
-		public void actionPerformed( ActionEvent e ) {
-			if ( tfNome.getText().equals( null ) ) {
-				JOptionPane.showMessageDialog( null, "Usuário não pode ser nulo!" );
-			} else {
-				table.setModel( AcoesUsuario.getInstance().ler( tfNome.getText() ) );
-				table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
-				setarTamanhoColunas();
-				tfSenha.setText( null );
-				id = null;
-			}
-		}
-	}
+	// private class lerUsuarioListener implements ActionListener {
+	//
+	// @Override
+	// public void actionPerformed( ActionEvent e ) {
+	// if ( tfNome.getText().equals( null ) ) {
+	// JOptionPane.showMessageDialog( null, "Usuário não pode ser nulo!" );
+	// } else {
+	// table.setModel( AcoesUsuario.getInstance().ler( tfNome.getText() ) );
+	// table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0
+	// ) );
+	// setarTamanhoColunas();
+	// tfSenha.setText( null );
+	// id = null;
+	// }
+	// }
+	// }
 
 	private class alterarUsuarioListener implements ActionListener {
 
@@ -231,34 +223,25 @@ public class UsuarioDialog extends JDialog {
 
 		@Override
 		public void actionPerformed( ActionEvent e ) {
-			if ( id == null ) {
-				JOptionPane.showMessageDialog( null, "Selecione um usuário para deletar!", "Erro", JOptionPane.ERROR_MESSAGE );
-			} else {
-				Object[] options = { "Sim", "Não" };
-				int sd = JOptionPane.showOptionDialog( null, "Deseja deletar usuário?", "Alerta", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
-						null, options, options[0] );
-				if ( sd == 0 ) {
-					table.setModel( AcoesUsuario.getInstance().deletar( id ) );
-					table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
-					setarTamanhoColunas();
-					tfNome.setText( null );
-					tfSenha.setText( null );
-					id = null;
-				} else {
+			for ( int i = 0; i < table.getRowCount(); i++ ) {
+				if ( (Boolean) table.getModel().getValueAt( i, 2 ) ) {
+					String usuario = (String) table.getModel().getValueAt( i, 1 );
+					int choice = TaskDialogs.choice( null, "O que você gostaria de fazer com o usuário " + usuario + "?", "", 1, new CommandLink(
+							"Deletar o usuário", "Deletar o usuário e o mesmo não ter mais acesso ao sistema." ), new CommandLink( "Não deletar o usuário",
+							"Não deletar o usuário e manter o acesso do mesmo ao sistema" ) );
+
+					if ( choice == 0 ) {
+						table.setModel( AcoesUsuario.getInstance().deletar( id ) );
+						table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
+						setarTamanhoColunas();
+						tfNome.setText( null );
+						tfSenha.setText( null );
+						id = null;
+					}
+
 				}
 			}
 		}
-	}
-
-	private class limparUsuarioListener implements ActionListener {
-
-		@Override
-		public void actionPerformed( ActionEvent e ) {
-			tfNome.setText( null );
-			tfSenha.setText( null );
-			id = null;
-		}
-
 	}
 
 	private class selecionarLinhaTabela implements MouseListener {
@@ -266,8 +249,11 @@ public class UsuarioDialog extends JDialog {
 		@Override
 		public void mouseClicked( MouseEvent e ) {
 			int linha = table.getSelectedRow();
+			for ( int i = 0; i < table.getRowCount(); i++ ) {
+				if ( table.getModel().getValueAt( i, 2 ).equals( new Boolean( true ) ) && linha != i )
+					table.getModel().setValueAt( new Boolean( false ), i, 2 );
+			}
 			id = new Long( ((String) table.getModel().getValueAt( linha, 0 )) );
-			tfNome.setText( (String) table.getModel().getValueAt( linha, 1 ) );
 		}
 
 		@Override

@@ -40,21 +40,6 @@ public class Login extends JFrame {
 	private JLabel lblUsuario;
 	private JLabel lblSenha;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main( String[] args ) {
-		EventQueue.invokeLater( new Runnable() {
-			public void run() {
-				try {
-					Login frame = new Login();
-					frame.setVisible( true );
-				} catch ( Exception e ) {
-					e.printStackTrace();
-				}
-			}
-		} );
-	}
 
 	/**
 	 * Create the frame.
