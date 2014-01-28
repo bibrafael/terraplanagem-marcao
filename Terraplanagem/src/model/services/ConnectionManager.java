@@ -5,7 +5,7 @@ import java.sql.DriverManager;
 
 public class ConnectionManager {
 
-	// Início Singleton
+	// Inï¿½cio Singleton
 	private ConnectionManager() {
 	}
 
@@ -24,7 +24,7 @@ public class ConnectionManager {
 
 	private String url = "jdbc:postgresql://localhost:5432/terraplanagem";
 	private String username = "postgres";
-	private String password = "1234";
+	private String password = "postgres";
 	private String driver = "org.postgresql.Driver";
 
 	// Metodos de servico
@@ -35,7 +35,7 @@ public class ConnectionManager {
 			Class.forName(driver);
 			conn = DriverManager.getConnection(url, username, password);
 		} catch (Exception e) {
-			System.out.println("Não foi possivel conectar ao bd!");
+			System.out.println("Nï¿½o foi possivel conectar ao bd!");
 		}
 		return (conn);
 	}

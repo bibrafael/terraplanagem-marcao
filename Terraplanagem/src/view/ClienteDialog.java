@@ -67,7 +67,7 @@ public class ClienteDialog extends JDialog {
 	private DefaultTableModel tableModel;
 
 	public ClienteDialog() {
-		this.setTitle( "Terraplanagem S„o Marcos - Cadastro de Clientes" );
+		this.setTitle( "Terraplanagem S√£o Marcos - Cadastro de Clientes" );
 		GridBagConstraints cons = new GridBagConstraints();
 		cons.insets = new Insets( 5, 5, 5, 5 );
 
@@ -101,7 +101,7 @@ public class ClienteDialog extends JDialog {
 		cons.gridx = 3;
 		panelItens.add( tfTelefone, cons );
 
-		lbEndereco = new JLabel( "EndereÁo:" );
+		lbEndereco = new JLabel( "Endere√ßo:" );
 		cons.gridy = 1;
 		cons.gridx = 0;
 		panelItens.add( lbEndereco, cons );
@@ -308,9 +308,9 @@ public class ClienteDialog extends JDialog {
 		@Override
 		public void actionPerformed( ActionEvent e ) {
 			if ( id == null ) {
-				JOptionPane.showMessageDialog( null, "Selecione um usu·rio para deletar!", "Erro", JOptionPane.ERROR_MESSAGE );
+				JOptionPane.showMessageDialog( null, "Selecione um usu√°rio para deletar!", "Erro", JOptionPane.ERROR_MESSAGE );
 			} else {
-				Object[] options = { "Sim", "N„o" };
+				Object[] options = { "Sim", "N√£o" };
 				int sd = JOptionPane.showOptionDialog( null, "Deseja deletar cliente?", "Alerta", JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE,
 						null, options, options[0] );
 				if ( sd == 0 ) {

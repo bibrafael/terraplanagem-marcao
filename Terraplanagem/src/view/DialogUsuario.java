@@ -50,7 +50,7 @@ public class DialogUsuario extends JDialog {
 	 */
 	public DialogUsuario() {
 		setDefaultCloseOperation( JFrame.DISPOSE_ON_CLOSE );
-		setTitle( "Terraplanagem São Marcos - Gerenciamento de Usuários" );
+		setTitle( "Terraplanagem SÃ£o Marcos - Gerenciamento de UsuÃ¡rios" );
 		setSize( 500, 500 );
 		setContentPane( getContentPane() );
 
@@ -136,7 +136,7 @@ public class DialogUsuario extends JDialog {
 							tfUsuario.setText( null );
 							pfSenha.setText( null );
 						} catch ( SQLException e1 ) {
-							JOptionPane.showMessageDialog( null, "Usuário já existente!", "Erro", JOptionPane.ERROR_MESSAGE );
+							JOptionPane.showMessageDialog( null, "Usuï¿½rio jï¿½ existente!", "Erro", JOptionPane.ERROR_MESSAGE );
 						} catch ( NoSuchAlgorithmException e2 ) {
 						}
 					}
@@ -176,7 +176,7 @@ public class DialogUsuario extends JDialog {
 
 	private JLabel getLblUsuario() {
 		if ( lblUsuario == null ) {
-			lblUsuario = new JLabel( "Usuário" );
+			lblUsuario = new JLabel( "UsuÃ¡rio" );
 			lblUsuario.setFont( new Font( "Arial", Font.PLAIN, 14 ) );
 			lblUsuario.setBounds( 30, 30, 60, 20 );
 		}
@@ -194,9 +194,9 @@ public class DialogUsuario extends JDialog {
 					for ( int i = 0; i < getTabUsuario().getRowCount(); i++ ) {
 						if ( (Boolean) getTabUsuario().getModel().getValueAt( i, 2 ) ) {
 							String usuario = (String) getTabUsuario().getModel().getValueAt( i, 1 );
-							int choice = TaskDialogs.choice( null, "O que você gostaria de fazer com o usuário " + usuario + "?", "", 1, new CommandLink(
-									"Deletar o usuário", "Deletar o usuário e o mesmo não ter mais acesso ao sistema." ), new CommandLink(
-									"Não deletar o usuário", "Não deletar o usuário e manter o acesso do mesmo ao sistema" ) );
+							int choice = TaskDialogs.choice( null, "O que vocï¿½ gostaria de fazer com o usuï¿½rio " + usuario + "?", "", 1, new CommandLink(
+									"Deletar o usuï¿½rio", "Deletar o usuï¿½rio e o mesmo nï¿½o ter mais acesso ao sistema." ), new CommandLink(
+									"Nï¿½o deletar o usuï¿½rio", "Nï¿½o deletar o usuï¿½rio e manter o acesso do mesmo ao sistema" ) );
 
 							if ( choice == 0 ) {
 								getTabUsuario().setModel(
@@ -235,7 +235,7 @@ public class DialogUsuario extends JDialog {
 						dialog.pack();
 						dialog.setVisible( true );
 					} else {
-						TaskDialogs.inform( DialogUsuario.this, "Selecione um usuário!", "Selecione um usuário para alterá-lo." );
+						TaskDialogs.inform( DialogUsuario.this, "Selecione um usuï¿½rio!", "Selecione um usuï¿½rio para alterï¿½-lo." );
 					}
 				}
 			} );

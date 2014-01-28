@@ -25,7 +25,7 @@ public class FramePrincipal extends JFrame {
 	private JMenuItem menuItemSair;
 
 	public FramePrincipal() {
-		this.setTitle( "Terraplanagem S„o Marcos" );
+		this.setTitle( "Terraplanagem S√£o Marcos" );
 		menuBar = new JMenuBar();
 		menu = new JMenu( "Cadastros" );
 		menuItemCliente = new JMenuItem( "Cliente" );
@@ -34,22 +34,22 @@ public class FramePrincipal extends JFrame {
 		menuItemProduto = new JMenuItem( "Produto" );
 		menuItemProduto.addActionListener( new ProdutoListener() );
 		menu.add( menuItemProduto );
-		menuItemUsuario = new JMenuItem( "Usu·rio" );
+		menuItemUsuario = new JMenuItem( "Usu√°rio" );
 		menuItemUsuario.addActionListener( new UsuarioListener() );
 		menu.add( menuItemUsuario );
 		menuBar.add( menu );
 
-		menu = new JMenu( "ServiÁos" );
+		menu = new JMenu( "Servi√ßos" );
 		menuItemTransporte = new JMenuItem( "Transportes" );
 		menuItemTransporte.addActionListener( new TransporteListener() );
 		menu.add( menuItemTransporte );
 		menuItemVendas = new JMenuItem( "Vendas" );
 		menuItemVendas.addActionListener( new VendasListener() );
 		menu.add( menuItemVendas );
-		menuItemRelatorio = new JMenuItem( "RelatÛrio de Transporte" );
+		menuItemRelatorio = new JMenuItem( "Relat√≥rio de Transporte" );
 		menuItemRelatorio.addActionListener( new RelatorioTransporteListener() );
 		menu.add( menuItemRelatorio );
-		menuItemRelatorio = new JMenuItem( "RelatÛrio de Vendas" );
+		menuItemRelatorio = new JMenuItem( "Relat√≥rio de Vendas" );
 		menuItemRelatorio.addActionListener( new RelatorioVendasListener() );
 		menu.add( menuItemRelatorio );
 		menuBar.add( menu );

@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.Vector;
 
 import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
+import model.MyTableModel;
 import model.pojo.ItemPedido;
 import model.pojo.Produto;
 import model.services.ServicosItemPedido;
@@ -31,13 +31,13 @@ public class AcoesItemPedido {
 		colunas.add("Id Produto");
 		colunas.add("Produto");
 		colunas.add("Densidade");
-		colunas.add("Peso do Caminh„o");
+		colunas.add("Peso do Caminh√£o");
 		colunas.add("Quantidade");
-		colunas.add("PreÁo Unit·rio");
-		colunas.add("PreÁo Total");
+		colunas.add("Pre√ßo Unit√°rio");
+		colunas.add("Pre√ßo Total");
 	}
 
-	public DefaultTableModel criar(Long pedidoId, Long produtoId, double quantidade, double pUnitario, double pTotal, double pesoCaminhao, double densidade) {
+	public MyTableModel criar(Long pedidoId, Long produtoId, double quantidade, double pUnitario, double pTotal, double pesoCaminhao, double densidade) {
 		ItemPedido itemPedido = new ItemPedido();
 		itemPedido.setPedidoId(pedidoId);
 		itemPedido.setProdutoId(produtoId);
@@ -51,7 +51,7 @@ public class AcoesItemPedido {
 		return(createModel(ServicosItemPedido.getInstance().lerPorPedido(pedidoId)));
 	}
 
-	public DefaultTableModel removerProduto(Long id, Long pedidoId) {
+	public MyTableModel removerProduto(Long id, Long pedidoId) {
 		if(id != null) {
 			ServicosItemPedido.getInstance().removerProduto(id);
 		} else {
@@ -60,16 +60,16 @@ public class AcoesItemPedido {
 		return(createModel(ServicosItemPedido.getInstance().lerPorPedido(pedidoId)));
 	}
 
-	public DefaultTableModel lerPorPedido(Long pedidoId) {
+	public MyTableModel lerPorPedido(Long pedidoId) {
 		return(createModel(ServicosItemPedido.getInstance().lerPorPedido(pedidoId)));
 	}
 
-	private DefaultTableModel createModel(List<ItemPedido> itemPedidos) {
-		DefaultTableModel model = null;
-		Vector<Vector<String>> dados = new Vector<Vector<String>>();
+	private MyTableModel createModel(List<ItemPedido> itemPedidos) {
+		MyTableModel model = null;
+		Vector<Vector<Object>> dados = new Vector<Vector<Object>>();
 		if(itemPedidos != null){
 			for(int i=0; i < itemPedidos.size();i++){
-				Vector<String> linha = new Vector<String>();
+				Vector<Object> linha = new Vector<Object>();
 				ItemPedido aux = itemPedidos.get(i);
 				linha.add(aux.getId().toString());
 				linha.add(aux.getPedidoId().toString());
@@ -93,7 +93,7 @@ public class AcoesItemPedido {
 				DecimalFormat format = new DecimalFormat("####.##");
 				format.setMaximumFractionDigits(2);
 
-				Vector<String> linha = new Vector<String>();
+				Vector<Object> linha = new Vector<Object>();
 				linha.add(null);
 				linha.add(null);
 				linha.add(null);
@@ -106,7 +106,7 @@ public class AcoesItemPedido {
 				dados.add(linha);
 			}
 		}
-		model = new DefaultTableModel(dados,colunas);
+		model = new MyTableModel(dados,colunas);
 		return(model);
 	};
 }

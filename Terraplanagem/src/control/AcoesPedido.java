@@ -29,7 +29,7 @@ public class AcoesPedido {
 		pTipo = tipo;
 		if(tipo) {
 			colunas = new Vector<String>();
-			colunas.add("Nº do Pedido");
+			colunas.add("NÂº do Pedido");
 			colunas.add("Id Cliente");
 			colunas.add("Data");
 			colunas.add("Local de Entrega");
@@ -37,7 +37,7 @@ public class AcoesPedido {
 			colunas.add("Pagamento Efetuado");
 		}else {
 			colunas = new Vector<String>();
-			colunas.add("Nº do Pedido");
+			colunas.add("NÂº do Pedido");
 			colunas.add("Id Cliente");
 			colunas.add("Data");
 			colunas.add("Valor Total");
