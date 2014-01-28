@@ -58,7 +58,7 @@ public class UsuarioDialog extends JDialog {
 	private DefaultTableModel tableModel;
 
 	public UsuarioDialog() {
-		this.setTitle( "Terraplanagem São Marcos - Cadastro de Usuários" );
+		this.setTitle( "Terraplanagem Sï¿½o Marcos - Cadastro de Usuï¿½rios" );
 
 		GridBagConstraints cons = new GridBagConstraints();
 		cons.insets = new Insets( 5, 5, 5, 5 );
@@ -69,7 +69,7 @@ public class UsuarioDialog extends JDialog {
 		panelItens = new JPanel();
 		panelItens.setLayout( new GridBagLayout() );
 
-		lbNome = new JLabel( "Usuário:" );
+		lbNome = new JLabel( "UsuÃ¡rio:" );
 		cons.gridy = 0;
 		cons.gridx = 0;
 		cons.anchor = GridBagConstraints.LINE_START;
@@ -178,7 +178,7 @@ public class UsuarioDialog extends JDialog {
 					tfSenha.setText( null );
 					id = null;
 				} catch ( SQLException e1 ) {
-					JOptionPane.showMessageDialog( null, "Usuário já existente!", "Erro", JOptionPane.ERROR_MESSAGE );
+					JOptionPane.showMessageDialog( null, "Usuï¿½rio jï¿½ existente!", "Erro", JOptionPane.ERROR_MESSAGE );
 				} catch ( NoSuchAlgorithmException e2 ) {
 				}
 			}
@@ -190,7 +190,7 @@ public class UsuarioDialog extends JDialog {
 	// @Override
 	// public void actionPerformed( ActionEvent e ) {
 	// if ( tfNome.getText().equals( null ) ) {
-	// JOptionPane.showMessageDialog( null, "Usuário não pode ser nulo!" );
+	// JOptionPane.showMessageDialog( null, "Usuï¿½rio nï¿½o pode ser nulo!" );
 	// } else {
 	// table.setModel( AcoesUsuario.getInstance().ler( tfNome.getText() ) );
 	// table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0
@@ -207,7 +207,7 @@ public class UsuarioDialog extends JDialog {
 		@Override
 		public void actionPerformed( ActionEvent e ) {
 			if ( id == null || tfNome.getText().isEmpty() ) {
-				JOptionPane.showMessageDialog( null, "Selecione um usuário para alterar.", "Alerta", JOptionPane.WARNING_MESSAGE );
+				JOptionPane.showMessageDialog( null, "Selecione um usuï¿½rio para alterar.", "Alerta", JOptionPane.WARNING_MESSAGE );
 			} else {
 				JDialog dialog = new AlterarSenhaDialog( id, tfNome.getText() );
 				dialog.pack();
@@ -226,9 +226,9 @@ public class UsuarioDialog extends JDialog {
 			for ( int i = 0; i < table.getRowCount(); i++ ) {
 				if ( (Boolean) table.getModel().getValueAt( i, 2 ) ) {
 					String usuario = (String) table.getModel().getValueAt( i, 1 );
-					int choice = TaskDialogs.choice( null, "O que você gostaria de fazer com o usuário " + usuario + "?", "", 1, new CommandLink(
-							"Deletar o usuário", "Deletar o usuário e o mesmo não ter mais acesso ao sistema." ), new CommandLink( "Não deletar o usuário",
-							"Não deletar o usuário e manter o acesso do mesmo ao sistema" ) );
+					int choice = TaskDialogs.choice( null, "O que vocï¿½ gostaria de fazer com o usuï¿½rio " + usuario + "?", "", 1, new CommandLink(
+							"Deletar o usuï¿½rio", "Deletar o usuï¿½rio e o mesmo nï¿½o ter mais acesso ao sistema." ), new CommandLink( "Nï¿½o deletar o usuï¿½rio",
+							"Nï¿½o deletar o usuï¿½rio e manter o acesso do mesmo ao sistema" ) );
 
 					if ( choice == 0 ) {
 						table.setModel( AcoesUsuario.getInstance().deletar( id ) );

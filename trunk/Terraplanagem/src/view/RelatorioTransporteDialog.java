@@ -44,7 +44,7 @@ public class RelatorioTransporteDialog extends JDialog {
 	private JPanel panelToolbar;
 
 	public RelatorioTransporteDialog() {
-		this.setTitle("Terraplanagem S„o Marcos - RelatÛrio de Transportes");
+		this.setTitle("Terraplanagem S√£o Marcos - Relat√≥rio de Transportes");
 
 		panelToolbar = new JPanel(new BorderLayout());
 
@@ -53,23 +53,24 @@ public class RelatorioTransporteDialog extends JDialog {
 		lbNome = new JLabel("Cliente");
 		panelFields.add(lbNome);
 
-		cbCliente = new JComboBox(AcoesRelatorio.getInstance().getComboBoxItens());
+		cbCliente = new JComboBox(AcoesRelatorio.getInstance()
+				.getComboBoxItens());
 		panelFields.add(cbCliente);
 
-		lbdtInicio = new JLabel("Data InÌcio");
+		lbdtInicio = new JLabel("Data In√≠cio");
 		panelFields.add(lbdtInicio);
 
 		tfdtInicio = new JFormattedTextField(setMascara("##/##/####"));
 		tfdtInicio.setColumns(6);
 		panelFields.add(tfdtInicio);
 
-		lbdtTermino = new JLabel("Data TÈrmino");
+		lbdtTermino = new JLabel("Data T√©rmino");
 		panelFields.add(lbdtTermino);
 
 		tfdtTermino = new JFormattedTextField(setMascara("##/##/####"));
 		tfdtTermino.setColumns(6);
 		panelFields.add(tfdtTermino);
-		
+
 		chbItens = new Checkbox("Mostrar pedidos pagos", false);
 		panelFields.add(chbItens);
 
@@ -77,7 +78,7 @@ public class RelatorioTransporteDialog extends JDialog {
 
 		panelButtons = new JPanel(new FlowLayout());
 
-		btRelatorio = new JButton("Gerar RelatÛrio");
+		btRelatorio = new JButton("Gerar Relat√≥rio");
 		btRelatorio.addActionListener(new gerarRelatorioListener(this));
 		panelButtons.add(btRelatorio);
 
@@ -91,12 +92,13 @@ public class RelatorioTransporteDialog extends JDialog {
 		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 
 	}
-	
+
 	private class cancelarRelatorioListener implements ActionListener {
 
 		private RelatorioTransporteDialog dialog = null;
-		
-		public cancelarRelatorioListener(RelatorioTransporteDialog relatorioDialog) {
+
+		public cancelarRelatorioListener(
+				RelatorioTransporteDialog relatorioDialog) {
 			dialog = relatorioDialog;
 		}
 
@@ -104,7 +106,7 @@ public class RelatorioTransporteDialog extends JDialog {
 		public void actionPerformed(ActionEvent e) {
 			dialog.dispose();
 		}
-		
+
 	}
 
 	private class gerarRelatorioListener implements ActionListener {
@@ -118,58 +120,72 @@ public class RelatorioTransporteDialog extends JDialog {
 		@Override
 		public void actionPerformed(ActionEvent e) {
 			boolean data = false;
-			if(((ComboBoxItem)cbCliente.getSelectedItem()).getId().equals(new Long(0))) {
-				JOptionPane.showMessageDialog(null, "Selecione um cliente", "Alerta", JOptionPane.WARNING_MESSAGE);
-			}else if(tfdtInicio.getText().isEmpty() || tfdtTermino.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Data InÌcio e/ou Data TÈrmino devem ser preenchidas.", "Alerta", JOptionPane.WARNING_MESSAGE);
-			}else {
+			if (((ComboBoxItem) cbCliente.getSelectedItem()).getId().equals(
+					new Long(0))) {
+				JOptionPane.showMessageDialog(null, "Selecione um cliente",
+						"Alerta", JOptionPane.WARNING_MESSAGE);
+			} else if (tfdtInicio.getText().isEmpty()
+					|| tfdtTermino.getText().isEmpty()) {
+				JOptionPane.showMessageDialog(null,
+						"Data In√≠cio e/ou Data T√©rmino devem ser preenchidas.",
+						"Alerta", JOptionPane.WARNING_MESSAGE);
+			} else {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 				try {
 					Date startDate = df.parse(tfdtInicio.getText());
 					Date finishDate = df.parse(tfdtTermino.getText());
-					
-					if(startDate.equals(finishDate)) {
+
+					if (startDate.equals(finishDate)) {
 						data = true;
-					}else if(startDate.before(finishDate)) {
+					} else if (startDate.before(finishDate)) {
 						data = true;
 					}
 				} catch (ParseException e1) {
 					JOptionPane.showMessageDialog(null, "teste");
 				}
-				if(data) {
+				if (data) {
 					try {
-						AcoesRelatorio.getInstance().criar(((ComboBoxItem)cbCliente.getSelectedItem()).getId(), formataData(tfdtInicio.getText()),
-								formataData(tfdtTermino.getText()), chbItens.getState(), false);
+						AcoesRelatorio
+								.getInstance()
+								.criar(((ComboBoxItem) cbCliente
+										.getSelectedItem()).getId(),
+										formataData(tfdtInicio.getText()),
+										formataData(tfdtTermino.getText()),
+										chbItens.getState(), false);
 					} catch (Exception e1) {
 						e1.printStackTrace();
 					}
-				}else {
-					JOptionPane.showMessageDialog(null, "Data InÌcio n„o pode ser depois da Data TÈrmino.", "Erro", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Data In√≠cio n√£o pode ser depois da Data T√©rmino.",
+							"Erro", JOptionPane.ERROR_MESSAGE);
 				}
 				dialog.dispose();
 			}
 		}
 	}
 
-	public  static java.sql.Date formataData(String data) throws  Exception {   
-		if (data == null || data.equals(""))  
-			return null;  
+	public static java.sql.Date formataData(String data) throws Exception {
+		if (data == null || data.equals(""))
+			return null;
 
-		java.sql.Date date = null;  
-		try {  
-			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");  
-			date = new java.sql.Date( ((java.util.Date)formatter.parse(data)).getTime() );  
-		} catch (ParseException e) {              
-			throw e;  
-		}  
-		return date;  
-	} 
-	
-	private MaskFormatter setMascara(String mascara){  
-		MaskFormatter mask = null;  
-		try{  
-			mask = new MaskFormatter(mascara);                    
-		}catch(java.text.ParseException ex){}  
-		return mask;  
-	}  
+		java.sql.Date date = null;
+		try {
+			DateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+			date = new java.sql.Date(
+					((java.util.Date) formatter.parse(data)).getTime());
+		} catch (ParseException e) {
+			throw e;
+		}
+		return date;
+	}
+
+	private MaskFormatter setMascara(String mascara) {
+		MaskFormatter mask = null;
+		try {
+			mask = new MaskFormatter(mascara);
+		} catch (java.text.ParseException ex) {
+		}
+		return mask;
+	}
 }

@@ -25,7 +25,7 @@ public class AcoesUsuario {
 	private AcoesUsuario() {
 		colunas = new Vector<String>();
 		colunas.add( "Id" );
-		colunas.add( "Usu·rio" );
+		colunas.add( "Usu√°rio" );
 		colunas.add( "Selecionar" );
 	}
 

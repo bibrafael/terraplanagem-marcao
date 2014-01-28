@@ -53,7 +53,7 @@ public class VendasDialog extends JDialog {
 	private DefaultTableModel tableModel;
 
 	public VendasDialog(boolean pTipo) {
-		this.setTitle("Terraplanagem São Marcos - Vendas");
+		this.setTitle("Terraplanagem SÃ£o Marcos - Vendas");
 		GridBagConstraints cons = new GridBagConstraints();
 		cons.insets = new Insets(5, 5, 5, 5);
 		

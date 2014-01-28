@@ -76,7 +76,7 @@ public class TransportesDialog extends JDialog {
 	private JTable table;
 
 	public TransportesDialog(Long idCliente, Long idPedido, boolean tipo) {
-		this.setTitle("Terraplanagem São Marcos - Transportes");
+		this.setTitle("Terraplanagem SÃ£o Marcos - Transportes");
 		GridBagConstraints cons = new GridBagConstraints();
 		cons.insets = new Insets(5, 5, 5, 5);
 		cons.fill = GridBagConstraints.HORIZONTAL;
@@ -102,7 +102,7 @@ public class TransportesDialog extends JDialog {
 		tfCliente.setEnabled(false);
 		panelItens.add(tfCliente);
 
-		lbDescricao = new JLabel("Descrição");
+		lbDescricao = new JLabel("DescriÃ§Ã£o");
 		cons.gridy = 1;
 		cons.gridx = 0;
 		panelItens.add(lbDescricao, cons);

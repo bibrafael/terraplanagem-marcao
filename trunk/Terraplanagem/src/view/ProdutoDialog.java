@@ -26,10 +26,10 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.WindowConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
+import model.MyTableModel;
 import control.AcoesProduto;
 
 public class ProdutoDialog extends JDialog {
@@ -51,242 +51,256 @@ public class ProdutoDialog extends JDialog {
 	private JFormattedTextField tfPVista;
 	private JFormattedTextField tfPPrazo;
 
-	private JPanel panelButtons; 	
+	private JPanel panelButtons;
 	private JButton btCriar;
 	private JButton btAlterar;
 	private JButton btDeletar;
 	private JButton btLimpar;
 
-	private JScrollPane scrollPanel;	
+	private JScrollPane scrollPanel;
 	private JTable table;
-	private DefaultTableModel tableModel;
+	private MyTableModel tableModel;
 
 	public ProdutoDialog() {
-		this.setTitle("Terraplanagem S„o Marcos - Cadastro de Produtos");
+		this.setTitle( "Terraplanagem S√£o Marcos - Cadastro de Produtos" );
 
 		GridBagConstraints cons = new GridBagConstraints();
-		cons.insets = new Insets(5, 5, 5, 5);
+		cons.insets = new Insets( 5, 5, 5, 5 );
 
 		panelToolBar = new JPanel();
-		panelToolBar.setLayout(new BorderLayout());
+		panelToolBar.setLayout( new BorderLayout() );
 
 		panelItens = new JPanel();
-		panelItens.setLayout(new GridBagLayout());		
-		id = new Long(0);
+		panelItens.setLayout( new GridBagLayout() );
+		id = new Long( 0 );
 
-		lbDescricao = new JLabel("DescriÁ„o:");
+		lbDescricao = new JLabel( "Descri√ß√£o:" );
 		cons.gridy = 0;
 		cons.gridx = 2;
 		cons.anchor = GridBagConstraints.LINE_START;
-		panelItens.add(lbDescricao, cons);
+		panelItens.add( lbDescricao, cons );
 
-		tfDescricao = new JTextField(15);
+		tfDescricao = new JTextField( 15 );
 		cons.gridy = 0;
 		cons.gridx = 3;
 		cons.gridwidth = 3;
-		tfDescricao.addKeyListener(new pesquisaProdutoListener());
-		panelItens.add(tfDescricao, cons);
-		
-		lbPUnitario = new JLabel("PreÁo Custo:");
+		tfDescricao.addKeyListener( new pesquisaProdutoListener() );
+		panelItens.add( tfDescricao, cons );
+
+		lbPUnitario = new JLabel( "Pre√ßo Custo:" );
 		cons.gridy = 1;
 		cons.gridx = 0;
 		cons.gridwidth = 1;
-		panelItens.add(lbPUnitario, cons);
+		panelItens.add( lbPUnitario, cons );
 
 		tfPUnitario = new JFormattedTextField();
-		InputMap mapPUnitario = tfPUnitario.getInputMap();  
-		mapPUnitario.put(KeyStroke.getKeyStroke('V', InputEvent.CTRL_DOWN_MASK), "beep");  
-		mapPUnitario.put(KeyStroke.getKeyStroke('C', InputEvent.CTRL_DOWN_MASK), "beep"); 
-		tfPUnitario.setColumns(7);
+		InputMap mapPUnitario = tfPUnitario.getInputMap();
+		mapPUnitario.put( KeyStroke.getKeyStroke( 'V', InputEvent.CTRL_DOWN_MASK ), "beep" );
+		mapPUnitario.put( KeyStroke.getKeyStroke( 'C', InputEvent.CTRL_DOWN_MASK ), "beep" );
+		tfPUnitario.setColumns( 7 );
 		cons.gridy = 1;
 		cons.gridx = 1;
-		tfPUnitario.addKeyListener(new teclasNumericasListener());
-		panelItens.add(tfPUnitario, cons);
-		
-		lbPVista = new JLabel("PreÁo ¿ Vista");
+		tfPUnitario.addKeyListener( new teclasNumericasListener() );
+		panelItens.add( tfPUnitario, cons );
+
+		lbPVista = new JLabel( "Pre√ßo √† Vista" );
 		cons.gridy = 1;
 		cons.gridx = 2;
-		panelItens.add(lbPVista, cons);
-		
+		panelItens.add( lbPVista, cons );
+
 		tfPVista = new JFormattedTextField();
 		InputMap mapPVista = tfPVista.getInputMap();
-		mapPVista.put(KeyStroke.getKeyStroke('V', InputEvent.CTRL_DOWN_MASK), "beep");
-		mapPVista.put(KeyStroke.getKeyStroke('C', InputEvent.CTRL_DOWN_MASK), "beep");
-		tfPVista.setColumns(7);
+		mapPVista.put( KeyStroke.getKeyStroke( 'V', InputEvent.CTRL_DOWN_MASK ), "beep" );
+		mapPVista.put( KeyStroke.getKeyStroke( 'C', InputEvent.CTRL_DOWN_MASK ), "beep" );
+		tfPVista.setColumns( 7 );
 		cons.gridy = 1;
 		cons.gridx = 3;
-		tfPVista.addKeyListener(new teclasNumericasListener());
-		panelItens.add(tfPVista, cons);
-		
-		lbPPrazo = new JLabel("PreÁo ¿ Prazo");
+		tfPVista.addKeyListener( new teclasNumericasListener() );
+		panelItens.add( tfPVista, cons );
+
+		lbPPrazo = new JLabel( "Pre√ßo √† Prazo" );
 		cons.gridy = 1;
 		cons.gridx = 4;
-		panelItens.add(lbPPrazo, cons);
-		
+		panelItens.add( lbPPrazo, cons );
+
 		tfPPrazo = new JFormattedTextField();
 		InputMap mapPPrazo = tfPPrazo.getInputMap();
-		mapPPrazo.put(KeyStroke.getKeyStroke('V', InputEvent.CTRL_DOWN_MASK), "beep");
-		mapPPrazo.put(KeyStroke.getKeyStroke('C', InputEvent.CTRL_DOWN_MASK), "beep");
-		tfPPrazo.setColumns(7);
+		mapPPrazo.put( KeyStroke.getKeyStroke( 'V', InputEvent.CTRL_DOWN_MASK ), "beep" );
+		mapPPrazo.put( KeyStroke.getKeyStroke( 'C', InputEvent.CTRL_DOWN_MASK ), "beep" );
+		tfPPrazo.setColumns( 7 );
 		cons.gridy = 1;
 		cons.gridx = 5;
-		tfPPrazo.addKeyListener(new teclasNumericasListener());
-		panelItens.add(tfPPrazo, cons);
-		
-		lbDensidade = new JLabel("Densidade:");
+		tfPPrazo.addKeyListener( new teclasNumericasListener() );
+		panelItens.add( tfPPrazo, cons );
+
+		lbDensidade = new JLabel( "Densidade:" );
 		cons.gridy = 1;
 		cons.gridx = 6;
-		panelItens.add(lbDensidade, cons);
+		panelItens.add( lbDensidade, cons );
 
 		tfDensidade = new JFormattedTextField();
-		InputMap mapDensidade = tfDensidade.getInputMap();  
-		mapDensidade.put(KeyStroke.getKeyStroke('V', InputEvent.CTRL_DOWN_MASK), "beep");  
-		mapDensidade.put(KeyStroke.getKeyStroke('C', InputEvent.CTRL_DOWN_MASK), "beep"); 
-		tfDensidade.setColumns(7);
+		InputMap mapDensidade = tfDensidade.getInputMap();
+		mapDensidade.put( KeyStroke.getKeyStroke( 'V', InputEvent.CTRL_DOWN_MASK ), "beep" );
+		mapDensidade.put( KeyStroke.getKeyStroke( 'C', InputEvent.CTRL_DOWN_MASK ), "beep" );
+		tfDensidade.setColumns( 7 );
 		cons.gridy = 1;
 		cons.gridx = 7;
-		tfDensidade.addKeyListener(new teclasNumericasListener());
-		panelItens.add(tfDensidade, cons);
-		
-		btLimpar = new JButton("Limpar");
+		tfDensidade.addKeyListener( new teclasNumericasListener() );
+		panelItens.add( tfDensidade, cons );
+
+		btLimpar = new JButton( "Limpar" );
 		cons.gridy = 2;
 		cons.gridx = 3;
-		btLimpar.addActionListener(new limparTelaListener());
-		panelItens.add(btLimpar, cons);
+		btLimpar.addActionListener( new limparTelaListener() );
+		panelItens.add( btLimpar, cons );
 
-		panelToolBar.add(panelItens, BorderLayout.PAGE_START);
+		panelToolBar.add( panelItens, BorderLayout.PAGE_START );
 
-		panelButtons = new JPanel(new FlowLayout());
+		panelButtons = new JPanel( new FlowLayout() );
 
-		btCriar = new JButton("Inserir");
-		btCriar.addActionListener(new criarProdutoListener());
-		panelButtons.add(btCriar);
+		btCriar = new JButton( "Inserir" );
+		btCriar.addActionListener( new criarProdutoListener() );
+		panelButtons.add( btCriar );
 
-		btAlterar = new JButton("Alterar");
-		btAlterar.addActionListener(new alterarProdutoListener());
-		panelButtons.add(btAlterar);
+		btAlterar = new JButton( "Alterar" );
+		btAlterar.addActionListener( new alterarProdutoListener() );
+		panelButtons.add( btAlterar );
 
-		btDeletar = new JButton("Deletar");
-		btDeletar.addActionListener(new deletarProdutoListener());
-		panelButtons.add(btDeletar);
+		btDeletar = new JButton( "Deletar" );
+		btDeletar.addActionListener( new deletarProdutoListener() );
+		panelButtons.add( btDeletar );
 
-		tableModel = AcoesProduto.getInstance().ler("");
-		table = new JTable(tableModel){
+		tableModel = AcoesProduto.getInstance().ler( "" );
+		table = new JTable( tableModel ) {
 			private static final long serialVersionUID = 1L;
 
-			public boolean isCellEditable(int row, int col) {
+			public boolean isCellEditable( int row, int col ) {
 				return false;
 			}
 		};
-		table.addMouseListener(new selecionarLinhaTabela());
-		table.getColumnModel().removeColumn( table.getColumnModel().getColumn(0));	
+		table.addMouseListener( new selecionarLinhaTabela() );
+		table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 		setarTamanhoColunas();
-		scrollPanel = new JScrollPane(table);	
+		scrollPanel = new JScrollPane( table );
 
-		this.setLayout(new BorderLayout());
-		this.add(panelToolBar, BorderLayout.PAGE_START);
-		this.add(scrollPanel, BorderLayout.CENTER);
-		this.add(panelButtons, BorderLayout.PAGE_END);
-		this.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+		this.setLayout( new BorderLayout() );
+		this.add( panelToolBar, BorderLayout.PAGE_START );
+		this.add( scrollPanel, BorderLayout.CENTER );
+		this.add( panelButtons, BorderLayout.PAGE_END );
+		this.setDefaultCloseOperation( WindowConstants.DISPOSE_ON_CLOSE );
 
 	}
 
 	private class pesquisaProdutoListener implements KeyListener {
 
 		@Override
-		public void keyPressed(KeyEvent e) {}
+		public void keyPressed( KeyEvent e ) {
+		}
+
 		@Override
-		public void keyReleased(KeyEvent e) {
-			table.setModel(AcoesProduto.getInstance().ler(tfDescricao.getText()));
-			table.getColumnModel().removeColumn( table.getColumnModel().getColumn(0));
+		public void keyReleased( KeyEvent e ) {
+			table.setModel( AcoesProduto.getInstance().ler( tfDescricao.getText() ) );
+			table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 			setarTamanhoColunas();
-			tfPUnitario.setText(null);
-			tfDensidade.setText(null);
+			tfPUnitario.setText( null );
+			tfDensidade.setText( null );
 			id = null;
 		}
+
 		@Override
-		public void keyTyped(KeyEvent e) {}
+		public void keyTyped( KeyEvent e ) {
+		}
 
 	}
 
 	private class teclasNumericasListener implements KeyListener {
 
 		@Override
-		public void keyPressed(KeyEvent e) {
+		public void keyPressed( KeyEvent e ) {
 		}
+
 		@Override
-		public void keyReleased(KeyEvent e) {
-			if(!(e.getKeyChar() == '1' || e.getKeyChar() == '2' || e.getKeyChar() == '3' || e.getKeyChar() == '4' || e.getKeyChar() == '5' ||
-					e.getKeyChar() == '6' || e.getKeyChar() == '7' || e.getKeyChar() == '8' || e.getKeyChar() == '9' || e.getKeyChar() == '0' || e.getKeyChar() == ',' ||
-					e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == 8 || e.getKeyCode() == 27 || e.getKeyCode() == KeyEvent.VK_TAB || e.getKeyCode() == 16 ||
-					e.getKeyCode() == 127 || e.getKeyCode() == 37 || e.getKeyCode() == 38 || e.getKeyCode() == 39 || e.getKeyCode() == 40 || e.getKeyCode() == 46) || e.getKeyCode() == 17) {
+		public void keyReleased( KeyEvent e ) {
+			if ( !( e.getKeyChar() == '1' || e.getKeyChar() == '2' || e.getKeyChar() == '3' || e.getKeyChar() == '4'
+					|| e.getKeyChar() == '5' || e.getKeyChar() == '6' || e.getKeyChar() == '7' || e.getKeyChar() == '8'
+					|| e.getKeyChar() == '9' || e.getKeyChar() == '0' || e.getKeyChar() == ','
+					|| e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == 8 || e.getKeyCode() == 27
+					|| e.getKeyCode() == KeyEvent.VK_TAB || e.getKeyCode() == 16 || e.getKeyCode() == 127
+					|| e.getKeyCode() == 37 || e.getKeyCode() == 38 || e.getKeyCode() == 39 || e.getKeyCode() == 40 || e
+					.getKeyCode() == 46 ) || e.getKeyCode() == 17 ) {
 			}
 		}
+
 		@Override
-		public void keyTyped(KeyEvent e) {
-			if(!(e.getKeyChar() == '1' || e.getKeyChar() == '2' || e.getKeyChar() == '3' || e.getKeyChar() == '4' || e.getKeyChar() == '5' ||
-					e.getKeyChar() == '6' || e.getKeyChar() == '7' || e.getKeyChar() == '8' || e.getKeyChar() == '9' || e.getKeyChar() == '0' ||
-					e.getKeyCode() == KeyEvent.VK_ENTER || e.getKeyCode() == 8 || e.getKeyCode() == 27 || e.getKeyChar() == '.')) {
+		public void keyTyped( KeyEvent e ) {
+			if ( !( e.getKeyChar() == '1' || e.getKeyChar() == '2' || e.getKeyChar() == '3' || e.getKeyChar() == '4'
+					|| e.getKeyChar() == '5' || e.getKeyChar() == '6' || e.getKeyChar() == '7' || e.getKeyChar() == '8'
+					|| e.getKeyChar() == '9' || e.getKeyChar() == '0' || e.getKeyCode() == KeyEvent.VK_ENTER
+					|| e.getKeyCode() == 8 || e.getKeyCode() == 27 || e.getKeyChar() == '.' ) ) {
 				e.consume();
-			}else {
+			} else {
 
 			}
 		}
 	}
 
-	class CenterRenderer extends DefaultTableCellRenderer {  
+	class CenterRenderer extends DefaultTableCellRenderer {
 		private static final long serialVersionUID = 4433840270638649209L;
 
-		public CenterRenderer() {  
-			setHorizontalAlignment(CENTER);  
-		}  
-	}  
-	public void setarTamanhoColunas() {
-		table.getColumnModel().getColumn(0).setPreferredWidth(200);
-		table.getColumnModel().getColumn(1).setPreferredWidth(150);
-		table.getColumnModel().getColumn(2).setPreferredWidth(150);
+		public CenterRenderer() {
+			setHorizontalAlignment( CENTER );
+		}
+	}
 
-		TableCellRenderer centerRenderer = new CenterRenderer();  
-		TableColumn column = table.getColumnModel().getColumn(2);  
-		column.setCellRenderer(centerRenderer); 
-		column = table.getColumnModel().getColumn(1);
-		column.setCellRenderer(centerRenderer);
+	public void setarTamanhoColunas() {
+		table.getColumnModel().getColumn( 0 ).setPreferredWidth( 200 );
+		table.getColumnModel().getColumn( 1 ).setPreferredWidth( 150 );
+		table.getColumnModel().getColumn( 2 ).setPreferredWidth( 150 );
+
+		TableCellRenderer centerRenderer = new CenterRenderer();
+		TableColumn column = table.getColumnModel().getColumn( 2 );
+		column.setCellRenderer( centerRenderer );
+		column = table.getColumnModel().getColumn( 1 );
+		column.setCellRenderer( centerRenderer );
 	}
 
 	private class criarProdutoListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(tfDescricao.getText().isEmpty() || tfPUnitario.getText().isEmpty() || tfDensidade.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "Alerta", JOptionPane.WARNING_MESSAGE);
-			}else {
+		public void actionPerformed( ActionEvent e ) {
+			if ( tfDescricao.getText().isEmpty() || tfPUnitario.getText().isEmpty() || tfDensidade.getText().isEmpty() ) {
+				JOptionPane.showMessageDialog( null, "Todos os campos devem ser preenchidos!", "Alerta",
+						JOptionPane.WARNING_MESSAGE );
+			} else {
 				String pUnitario = tfPUnitario.getText();
 				String densidade = tfDensidade.getText();
 				String pVista = tfPVista.getText();
 				String pPrazo = tfPPrazo.getText();
-				if(tfPUnitario.getText().contains(",")) {
-					pUnitario = pUnitario.replace(",", ".");
+				if ( tfPUnitario.getText().contains( "," ) ) {
+					pUnitario = pUnitario.replace( ",", "." );
 				}
-				if(tfDensidade.getText().contains(",")) {
-					densidade = densidade.replace(",", ".");
+				if ( tfDensidade.getText().contains( "," ) ) {
+					densidade = densidade.replace( ",", "." );
 				}
-				if(tfPPrazo.getText().contains(",")) {
-					pPrazo = pPrazo.replace(",", ".");
+				if ( tfPPrazo.getText().contains( "," ) ) {
+					pPrazo = pPrazo.replace( ",", "." );
 				}
-				if(tfPVista.getText().contains(",")) {
-					pVista = pVista.replace(",", ".");
+				if ( tfPVista.getText().contains( "," ) ) {
+					pVista = pVista.replace( ",", "." );
 				}
-				table.setModel(AcoesProduto.getInstance().criar(tfDescricao.getText(), Double.parseDouble(pUnitario), Double.parseDouble(densidade),
-						Double.parseDouble(pVista), Double.parseDouble(pPrazo)));
-				table.getColumnModel().removeColumn( table.getColumnModel().getColumn(0));
+				table.setModel( AcoesProduto.getInstance().criar( tfDescricao.getText(),
+						Double.parseDouble( pUnitario ), Double.parseDouble( densidade ), Double.parseDouble( pVista ),
+						Double.parseDouble( pPrazo ) ) );
+				table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 				setarTamanhoColunas();
-				tfDescricao.setText(null);
-				tfPUnitario.setText(null);
-				tfDensidade.setText(null);
-				tfPVista.setText(null);
-				tfPPrazo.setText(null);
+				tfDescricao.setText( null );
+				tfPUnitario.setText( null );
+				tfDensidade.setText( null );
+				tfPVista.setText( null );
+				tfPPrazo.setText( null );
 				id = null;
-				JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog( null, "Produto cadastrado com sucesso.", "Sucesso",
+						JOptionPane.INFORMATION_MESSAGE );
 			}
 		}
 	}
@@ -294,35 +308,37 @@ public class ProdutoDialog extends JDialog {
 	private class alterarProdutoListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(tfDescricao.getText().isEmpty() || tfPUnitario.getText().isEmpty() || tfDensidade.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Todos os campos devem ser preenchidos!", "Alerta", JOptionPane.WARNING_MESSAGE);
-			}else {
+		public void actionPerformed( ActionEvent e ) {
+			if ( tfDescricao.getText().isEmpty() || tfPUnitario.getText().isEmpty() || tfDensidade.getText().isEmpty() ) {
+				JOptionPane.showMessageDialog( null, "Todos os campos devem ser preenchidos!", "Alerta",
+						JOptionPane.WARNING_MESSAGE );
+			} else {
 				String pUnitario = tfPUnitario.getText();
 				String densidade = tfDensidade.getText();
 				String pVista = tfPVista.getText();
 				String pPrazo = tfPPrazo.getText();
-				if(tfPUnitario.getText().contains(",")) {
-					pUnitario = pUnitario.replace(",", ".");
+				if ( tfPUnitario.getText().contains( "," ) ) {
+					pUnitario = pUnitario.replace( ",", "." );
 				}
-				if(tfDensidade.getText().contains(",")) {
-					densidade = densidade.replace(",", ".");
+				if ( tfDensidade.getText().contains( "," ) ) {
+					densidade = densidade.replace( ",", "." );
 				}
-				if(tfPPrazo.getText().contains(",")) {
-					pPrazo = pPrazo.replace(",", ".");
+				if ( tfPPrazo.getText().contains( "," ) ) {
+					pPrazo = pPrazo.replace( ",", "." );
 				}
-				if(tfPVista.getText().contains(",")) {
-					pVista = pVista.replace(",", ".");
+				if ( tfPVista.getText().contains( "," ) ) {
+					pVista = pVista.replace( ",", "." );
 				}
-				table.setModel(AcoesProduto.getInstance().atualizar(id, tfDescricao.getText(), Double.parseDouble(pUnitario), Double.parseDouble(densidade),
-						Double.parseDouble(pVista), Double.parseDouble(pPrazo)));
-				table.getColumnModel().removeColumn(table.getColumnModel().getColumn(0));
+				table.setModel( AcoesProduto.getInstance().atualizar( id, tfDescricao.getText(),
+						Double.parseDouble( pUnitario ), Double.parseDouble( densidade ), Double.parseDouble( pVista ),
+						Double.parseDouble( pPrazo ) ) );
+				table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 				setarTamanhoColunas();
-				tfDescricao.setText(null);
-				tfPUnitario.setText(null);
-				tfDensidade.setText(null);
-				tfPVista.setText(null);
-				tfPPrazo.setText(null);
+				tfDescricao.setText( null );
+				tfPUnitario.setText( null );
+				tfDensidade.setText( null );
+				tfPVista.setText( null );
+				tfPPrazo.setText( null );
 				id = null;
 			}
 		}
@@ -331,30 +347,24 @@ public class ProdutoDialog extends JDialog {
 	private class deletarProdutoListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			if(id == null) {
-				JOptionPane.showMessageDialog(null, "Selecione um usu·rio para deletar!", "Erro", JOptionPane.ERROR_MESSAGE);
-			}else {
-				Object[] options = { "Sim", "N„o" };   
-				int sd =   
-					JOptionPane.showOptionDialog(   
-							null,   
-							"Deseja deletar produto?",   
-							"Alerta",   
-							JOptionPane.DEFAULT_OPTION,   
-							JOptionPane.WARNING_MESSAGE,   
-							null,   
-							options,   
-							options[0]);  
-				if (sd == 0) {   
-					table.setModel(AcoesProduto.getInstance().deletar(id));
-					table.getColumnModel().removeColumn(table.getColumnModel().getColumn(0));
+		public void actionPerformed( ActionEvent e ) {
+			if ( id == null ) {
+				JOptionPane.showMessageDialog( null, "Selecione um usu√°rio para deletar!", "Erro",
+						JOptionPane.ERROR_MESSAGE );
+			} else {
+				Object[] options = { "Sim", "N√£o" };
+				int sd = JOptionPane.showOptionDialog( null, "Deseja deletar produto?", "Alerta",
+						JOptionPane.DEFAULT_OPTION, JOptionPane.WARNING_MESSAGE, null, options, options[0] );
+				if ( sd == 0 ) {
+					table.setModel( AcoesProduto.getInstance().deletar( id ) );
+					table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 					setarTamanhoColunas();
-					tfDescricao.setText(null);
-					tfPUnitario.setText(null);
-					tfDensidade.setText(null);
+					tfDescricao.setText( null );
+					tfPUnitario.setText( null );
+					tfDensidade.setText( null );
 					id = null;
-				}else {}
+				} else {
+				}
 			}
 		}
 
@@ -363,12 +373,12 @@ public class ProdutoDialog extends JDialog {
 	private class limparTelaListener implements ActionListener {
 
 		@Override
-		public void actionPerformed(ActionEvent e) {
-			tfDescricao.setText(null);
-			tfDensidade.setText(null);
-			tfPUnitario.setText(null);
-			table.setModel(AcoesProduto.getInstance().ler(tfDescricao.getText()));
-			table.getColumnModel().removeColumn( table.getColumnModel().getColumn(0));
+		public void actionPerformed( ActionEvent e ) {
+			tfDescricao.setText( null );
+			tfDensidade.setText( null );
+			tfPUnitario.setText( null );
+			table.setModel( AcoesProduto.getInstance().ler( tfDescricao.getText() ) );
+			table.getColumnModel().removeColumn( table.getColumnModel().getColumn( 0 ) );
 			setarTamanhoColunas();
 		}
 
@@ -377,23 +387,31 @@ public class ProdutoDialog extends JDialog {
 	private class selecionarLinhaTabela implements MouseListener {
 
 		@Override
-		public void mouseClicked(MouseEvent e) {
+		public void mouseClicked( MouseEvent e ) {
 			int linha = table.getSelectedRow();
-			id = new Long(((String)table.getModel().getValueAt(linha, 0)));	
-			tfDescricao.setText((String)table.getModel().getValueAt(linha, 1));
-			tfPUnitario.setText((String)table.getModel().getValueAt(linha, 2));
-			tfPVista.setText((String)table.getModel().getValueAt(linha, 3));
-			tfPPrazo.setText((String)table.getModel().getValueAt(linha, 4));
-			tfDensidade.setText((String)table.getModel().getValueAt(linha, 5));
-			
+			id = new Long( ( (String) table.getModel().getValueAt( linha, 0 ) ) );
+			tfDescricao.setText( (String) table.getModel().getValueAt( linha, 1 ) );
+			tfPUnitario.setText( (String) table.getModel().getValueAt( linha, 2 ) );
+			tfPVista.setText( (String) table.getModel().getValueAt( linha, 3 ) );
+			tfPPrazo.setText( (String) table.getModel().getValueAt( linha, 4 ) );
+			tfDensidade.setText( (String) table.getModel().getValueAt( linha, 5 ) );
+
 		}
+
 		@Override
-		public void mouseEntered(MouseEvent e) {}
+		public void mouseEntered( MouseEvent e ) {
+		}
+
 		@Override
-		public void mouseExited(MouseEvent e) {}
+		public void mouseExited( MouseEvent e ) {
+		}
+
 		@Override
-		public void mousePressed(MouseEvent e) {}
+		public void mousePressed( MouseEvent e ) {
+		}
+
 		@Override
-		public void mouseReleased(MouseEvent e) {}
+		public void mouseReleased( MouseEvent e ) {
+		}
 	}
 }

@@ -44,7 +44,7 @@ public class RelatorioVendasDialog extends JDialog {
 	private JPanel panelToolbar;
 
 	public RelatorioVendasDialog() {
-		this.setTitle("Terraplanagem São Marcos - Relatório de Vendas");
+		this.setTitle("Terraplanagem SÃ£o Marcos - RelatÃ³rio de Vendas");
 
 		panelToolbar = new JPanel(new BorderLayout());
 
@@ -56,14 +56,14 @@ public class RelatorioVendasDialog extends JDialog {
 		cbCliente = new JComboBox(AcoesRelatorio.getInstance().getComboBoxItens());
 		panelFields.add(cbCliente);
 
-		lbdtInicio = new JLabel("Data Início");
+		lbdtInicio = new JLabel("Data InÃ­cio");
 		panelFields.add(lbdtInicio);
 
 		tfdtInicio = new JFormattedTextField(setMascara("##/##/####"));
 		tfdtInicio.setColumns(6);
 		panelFields.add(tfdtInicio);
 
-		lbdtTermino = new JLabel("Data Término");
+		lbdtTermino = new JLabel("Data TÃ©rmino");
 		panelFields.add(lbdtTermino);
 
 		tfdtTermino = new JFormattedTextField(setMascara("##/##/####"));
@@ -77,7 +77,7 @@ public class RelatorioVendasDialog extends JDialog {
 
 		panelButtons = new JPanel(new FlowLayout());
 
-		btRelatorio = new JButton("Gerar Relatório");
+		btRelatorio = new JButton("Gerar RelatÃ³rio");
 		btRelatorio.addActionListener(new gerarRelatorioListener(this));
 		panelButtons.add(btRelatorio);
 
@@ -121,7 +121,7 @@ public class RelatorioVendasDialog extends JDialog {
 			if(((ComboBoxItem)cbCliente.getSelectedItem()).getId().equals(new Long(0))) {
 				JOptionPane.showMessageDialog(null, "Selecione um cliente", "Alerta", JOptionPane.WARNING_MESSAGE);
 			}else if(tfdtInicio.getText().isEmpty() || tfdtTermino.getText().isEmpty()) {
-				JOptionPane.showMessageDialog(null, "Data Início e/ou Data Término devem ser preenchidas.", "Alerta", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Data Incio e/ou Data TÃ©rmino devem ser preenchidas.", "Alerta", JOptionPane.WARNING_MESSAGE);
 			}else {
 				SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 				try {
@@ -144,7 +144,7 @@ public class RelatorioVendasDialog extends JDialog {
 						e1.printStackTrace();
 					}
 				}else {
-					JOptionPane.showMessageDialog(null, "Data Início não pode ser depois da Data Término.", "Erro", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Data InÃ­cio nÃ£o pode ser depois da Data TÃ©rmino.", "Erro", JOptionPane.ERROR_MESSAGE);
 				}
 				dialog.dispose();
 			}
